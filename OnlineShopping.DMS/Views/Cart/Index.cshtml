@@ -1,0 +1,175 @@
+﻿@using Microsoft.Extensions.Options
+@model IEnumerable<OnlineShopping.DMS.Models.Order>
+
+
+@{
+    Layout = "_Layout2";
+    double totalPrice = 0;
+    double noOfItems = 0;
+}
+
+
+
+<section class="h-100" style="background-color: #eee;">
+    <div class="container h-100 py-5" id="details">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-10">
+
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h3 class="fw-normal mb-0 text-black">Shopping Cart</h3>
+     
+
+        </div>
+
+               
+            @if(Model == null||Model.Count()==0)
+            {
+                <p style="margin:auto">
+                You Donot Have Any Product IN Your Cart
+                    </p>
+                    return;
+                }
+
+                else{
+                    @foreach (var item in Model)
+                    {
+                           totalPrice += @item.Item.Price * @item.ItemQuantity;
+                           noOfItems += @item.ItemQuantity;
+
+
+                        <div class="card rounded-3 mb-4">
+                            <div class="card-body p-4">
+
+                      <div class="row d-flex justify-content-between align-items-center">
+                       <div class="col-md-2 col-lg-2 col-xl-2">
+
+                <img src="~/images/Items/@item.Item.image"
+
+                  class="img-fluid rounded-3" alt="">
+
+              </div>
+
+
+              <div class="col-md-3 col-lg-3 col-xl-3">
+
+                <p class="lead fw-normal mb-2">@item.Item.Name</p>
+               
+            
+            </div>
+
+
+
+              <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
+                                        @{
+                                            int mx = Math.Min(item.ItemQuantity + 1, item.Item.Quantity);
+                                            int mn = Math.Max(item.ItemQuantity - 1, 1);
+                                        }
+
+
+                                      <form asp-action="EditItemQuantity" asp-controller="Cart"
+                                      asp-route-id="@item.ID" asp-route-value="value" >
+                                        
+
+
+                                        <button class="btn btn-link px-2"
+                                        onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+
+
+                                        <i class="fas fa-minus"></i>
+
+
+                                            </button>
+
+
+                                        <button class="btn btn-link px-2"
+                                        onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
+                                         name="quantity">
+
+
+                                            <i class="fas fa-plus"></i>
+
+                                        </button>
+
+
+                                        <input id="form1" min="0"  type="number"
+                                           class="form-control form-control-sm" value="@item.ItemQuantity" name="value" />
+
+                                            <button type="submit" class="w3ls-cart"><i class="fa fa-cart-plus" aria-hidden="true"></i>CONFIRM</button>
+
+                                        </form>
+
+                                       
+
+
+
+              </div>
+
+
+
+              <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                                        <span class="mb-0"  style="font-size: 25px;" ><i class="bi bi-currency-dollar" ></i>@item.Item.Price
+                                            <a href="/Cart/Delete/@item.ID" onclick="return confirm('are you sure')"> <span id="boot-icon" class="bi bi-trash" style="font-size: 30px; color: rgb(255, 0, 0);"></span> </a>
+                                        </span>
+
+                                
+
+
+                                    </div>
+
+
+                                   
+
+
+             
+
+            </div>
+          </div>
+        </div>
+
+      }
+
+
+
+
+
+
+
+
+        <div class="card mb-4">
+          <div class="card-body p-4 d-flex flex-row">
+            <div class="form-outline flex-fill">
+              <input type="text" id="form1" class="form-control form-control-lg" value="@totalPrice" />
+
+              <label class="form-label" for="form1">Total Price</label>
+            </div>
+         
+
+          </div>
+        </div>
+
+
+
+
+        <div class="card">
+          <div class="card-body">
+            <button type="button" class="btn btn-warning btn-block btn-lg">Proceed to Pay</button>
+
+
+
+          </div>
+        </div>
+
+
+
+      }
+      </div>
+    </div>
+  </div>
+</section>
+
+
+                
+
+
+

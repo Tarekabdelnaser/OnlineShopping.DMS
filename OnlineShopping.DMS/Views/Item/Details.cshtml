@@ -1,0 +1,72 @@
+﻿@model OnlineShopping.DMS.Models.Item
+
+@{
+    Layout = "_Layout2";
+}
+
+
+<header class="masthead">
+    
+    <div class="container d-flex justify-content-center mt-50 mb-50">
+        <div class="row">
+
+           
+            <h1 class="display-1 lh-1 mb-3">@Model.Name</h1>
+
+                <div >
+                       <div class="card" >
+                                    <div class="card-body">
+                                        <div class="card-img-actions">
+                                            
+                            <h3 class="text-danger text-center bg-muted "> <b> <i class="bi bi-currency-dollar">@Model.Price </b></i></h3>
+
+                            
+
+                            <img src="~/images/Items/@Model.image" class="card-img img-fluid" width="96" height="350" alt="">
+                                              
+                                           
+                                        </div>
+                                    </div>
+
+
+                                    <div class="card-body bg-light text-center">
+                                        <div class="mb-2">
+                                            <h4 class="font-weight-semibold mb-2">
+
+                                                @Model.Description
+
+                                            </h4>
+
+                                        </div>
+
+
+                      
+@*
+                            <button class="btn btn-danger">Add to cart</button>*@
+
+
+                        <form asp-action="Create" asp-controller="Order" asp-route-id="@Model.ID" method="post">
+                            <input type="hidden" name="id" value="@Model.ID" />
+                            <button type="submit" class="w3ls-cart"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add to cart</button>
+                        </form>
+
+
+                                        
+                                    </div>
+
+
+                                    
+                                </div>
+
+                </div>
+
+
+
+            
+
+        </div>
+
+
+    </div>
+
+</header>

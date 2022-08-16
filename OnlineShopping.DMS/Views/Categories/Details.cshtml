@@ -1,0 +1,77 @@
+﻿@model OnlineShopping.DMS.Models.Category
+
+@{
+    Layout = "_Layout2";
+}
+
+
+
+
+
+<header class="masthead">
+    
+    <div class="container d-flex justify-content-center mt-50 mb-50">
+        <div class="row">
+
+            <h1 class="display-1 lh-1 mb-3">Look at Our Products!.</h1>
+
+
+
+
+            @foreach (var item in ViewBag.Items)
+            {
+                <div class="col-md-4 mt-2">
+                       <div class="card" >
+                                    <div class="card-body">
+                                        <div class="card-img-actions">
+
+                            <img src="~/images/Items/@item.image" class="card-img img-fluid" width="96" height="350" alt="">
+                                              
+                                           
+                                        </div>
+                                    </div>
+
+
+                                    <div class="card-body bg-light text-center">
+                                        <div class="mb-2">
+                                            <h6 class="font-weight-semibold mb-2">
+
+                                                <a asp-action="Details" asp-controller="Item" asp-route-id="@item.ID" class="text-default mb-2" data-abc="true">@item.Name</a>
+
+                                            </h6>
+
+                                        </div>
+
+
+                            <p class="price">$@item.Price</p>
+
+
+
+                            <a asp-action="Details" class="btn btn-warning btn-block btn-lg"  asp-controller="Item" asp-route-id="@item.ID"  >
+
+                                Item Description
+
+                            </a>
+
+
+                                        
+                                    </div>
+
+
+                                    
+                                </div>
+
+                </div>
+
+
+            }
+
+        </div>
+
+
+    </div>
+
+</header>
+
+
+
