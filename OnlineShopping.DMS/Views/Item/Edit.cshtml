@@ -1,18 +1,19 @@
 ﻿@model OnlineShopping.DMS.Models.Item
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Edit";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h2>Create</h2>
+<h2>Edit</h2>
 
 <h4>Item</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ID" />
             <div class="form-group">
                 <label asp-for="Quantity" class="control-label"></label>
                 <input asp-for="Quantity" class="form-control" />
@@ -38,25 +39,23 @@
                 <input asp-for="image" class="form-control" />
                 <span asp-validation-for="image" class="text-danger"></span>
             </div>
-
-
             <div class="form-group">
-                <label asp-for="CategoryId" class="control-label">CategoryName</label>
-                <select asp-for="CategoryId" class ="form-control" asp-items="ViewBag.CategoryId"></select>
-            </div>
-
-
-
-            <div class="form-group">
-                <label asp-for="TaxId" class="control-label">Tax Value</label>
-                <select asp-for="TaxId" class ="form-control" asp-items="ViewBag.TaxId"></select>
+                <label asp-for="CategoryId" class="control-label"></label>
+                <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.CategoryId"></select>
+                <span asp-validation-for="CategoryId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="DiscountId" class="control-label">Discount Value</label>
-                <select asp-for="DiscountId" class ="form-control" asp-items="ViewBag.DiscountId"></select>
+                <label asp-for="TaxId" class="control-label"></label>
+                <select asp-for="TaxId" class="form-control" asp-items="ViewBag.TaxId"></select>
+                <span asp-validation-for="TaxId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <label asp-for="DiscountId" class="control-label"></label>
+                <select asp-for="DiscountId" class="form-control" asp-items="ViewBag.DiscountId"></select>
+                <span asp-validation-for="DiscountId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
             </div>
         </form>
     </div>

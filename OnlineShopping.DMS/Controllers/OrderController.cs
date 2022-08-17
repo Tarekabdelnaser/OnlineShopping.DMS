@@ -94,7 +94,15 @@ namespace OnlineShopping.DMS.Controllers
             OrderRepository.DeleteOrder(id);
             return RedirectToAction(nameof(Index));
         }
-      
+
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
+        public IActionResult GetAllOrders()
+        {
+          var orders=  OrderRepository.GetAll();
+            return View(orders);
+
+        }
 
 
 

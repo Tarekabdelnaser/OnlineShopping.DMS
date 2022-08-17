@@ -15,5 +15,7 @@ namespace OnlineShopping.DMS.Repo.Repositories
         public void DeleteItem(int id);
         public List<Item> Search(string term);
 
+        public decimal SetToalprice(Item Item);
+
     }
 }

@@ -1,4 +1,5 @@
-﻿using OnlineShopping.DMS.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using OnlineShopping.DMS.Data;
 using OnlineShopping.DMS.Models;
 using OnlineShopping.DMS.Repo.Repositories;
 
@@ -22,11 +23,41 @@ namespace OnlineShopping.DMS.Services.Repositories
 
         public Item GetDetails(int? id)
         {
-            return Context.Items.Find(id);
+
+            var Item = Context.Items
+
+
+
+                .Include(c => c.Tax).Include(c => c.Discount).FirstOrDefault(x => x.ID == id);
+
+             
+
+
+            return Item;
+
         }
+        public decimal SetToalprice(Item Item)
+        {
+            var item = Item;
+
+            Tax taxi = Context.Taxes.Find(Item.TaxId);
+
+            Discount Dis = Context.Discounts.Find(Item.DiscountId);
+
+
+            item.totalPrice= (item.Price + taxi.value) - Dis.value;
+
+
+            return item.totalPrice;
+
+        }
+
 
         public void Insert(Item Item)
         {
+           Item.totalPrice=SetToalprice(Item);
+
+
             Context.Items.Add(Item);
             Context.SaveChanges();
         }

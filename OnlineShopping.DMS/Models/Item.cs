@@ -14,7 +14,7 @@ namespace OnlineShopping.DMS.Models
         public string Name { get; set; }
         [Required]
         [Range(1, double.MaxValue)]
-        public double Price { get; set; }
+        public decimal Price { get; set; }
 
 
 
@@ -24,10 +24,24 @@ namespace OnlineShopping.DMS.Models
         public string image { get; set; }
         [ForeignKey("Category")]
         public int? CategoryId { get; set; }
-        public virtual Category Category { get; set; }
+        public virtual Category Category { get; set; } 
 
 
-        public virtual ICollection<Order> Orders { get; set; } = new HashSet<Order>();
+        [ForeignKey("Tax")]
+
+        public int? TaxId { get; set; }
+        public virtual Tax Tax { get; set; }
+
+        [ForeignKey("Discount")]
+        public int? DiscountId { get; set; }
+        public virtual Discount Discount { get; set; }
+
+      public  decimal totalPrice { set; get; }
+
+
+
+
+        public virtual ICollection<Order> Orders { get;} = new HashSet<Order>();
 
 
 

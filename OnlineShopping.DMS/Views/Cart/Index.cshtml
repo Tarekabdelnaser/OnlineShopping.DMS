@@ -4,7 +4,7 @@
 
 @{
     Layout = "_Layout2";
-    double totalPrice = 0;
+    decimal totalPrice = 0;
     double noOfItems = 0;
 }
 
@@ -34,7 +34,8 @@
                 else{
                     @foreach (var item in Model)
                     {
-                           totalPrice += @item.Item.Price * @item.ItemQuantity;
+                           totalPrice += @item.Item.totalPrice * @item.ItemQuantity;
+
                            noOfItems += @item.ItemQuantity;
 
 
@@ -108,7 +109,7 @@
 
 
               <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                                        <span class="mb-0"  style="font-size: 25px;" ><i class="bi bi-currency-dollar" ></i>@item.Item.Price
+                                        <span class="mb-0"  style="font-size: 25px;" ><i class="bi bi-currency-dollar" ></i>@item.Item.totalPrice
                                             <a href="/Cart/Delete/@item.ID" onclick="return confirm('are you sure')"> <span id="boot-icon" class="bi bi-trash" style="font-size: 30px; color: rgb(255, 0, 0);"></span> </a>
                                         </span>
 
@@ -151,14 +152,7 @@
 
 
 
-        <div class="card">
-          <div class="card-body">
-            <button type="button" class="btn btn-warning btn-block btn-lg">Proceed to Pay</button>
-
-
-
-          </div>
-        </div>
+      
 
 
 

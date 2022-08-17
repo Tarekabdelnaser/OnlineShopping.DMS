@@ -15,10 +15,17 @@ namespace OnlineShopping.DMS.Controllers
         public IItemRepository ItemRepository;
         public ICategoryRepository categoryRepository;
 
-        public ItemController(IItemRepository _ItemRepository, ICategoryRepository _categoryRepository)
+        public ITaxRepository TaxRepo;
+
+        public IDiscount Discount;
+
+
+        public ItemController(IItemRepository _ItemRepository, ICategoryRepository _categoryRepository , IDiscount dis , ITaxRepository tax)
         {
             ItemRepository = _ItemRepository;
             categoryRepository = _categoryRepository;
+            TaxRepo = tax;
+            Discount = dis;
         }
 
         // GET: Item
@@ -34,10 +41,13 @@ namespace OnlineShopping.DMS.Controllers
         // GET: Item/Details/5
         public IActionResult Details(int? id)
         {
+
+
             if (id == null)
             {
                 return NotFound();
             }
+
             var Item = ItemRepository.GetDetails(id);
             if (Item == null)
             {
@@ -45,16 +55,26 @@ namespace OnlineShopping.DMS.Controllers
             }
             ViewBag.Categories = categoryRepository.GetAll();
 
+
+
+
+
             return View(Item);
         }
 
         // GET: Item/Create
         public IActionResult Create()
         {
-            ViewData["Categories"] = new SelectList(categoryRepository.GetAll(), "ID", "Name");
+            ViewData["CategoryId"] = new SelectList(categoryRepository.GetAll(), "ID", "Name");
 
-            ViewData["AdminyId"] = new SelectList(categoryRepository.GetAll(), "ID", "Name");
+            ViewData["DiscountId"] = new SelectList(Discount.GetAll(), "ID", "value");
+
+            ViewData["TaxId"] = new SelectList(TaxRepo.GetAll(), "ID", "value");
+
+
+
             //ViewData["CategoryId"] = new SelectList(, "ID", "Name");
+
             return View();
         }
 
@@ -63,16 +83,17 @@ namespace OnlineShopping.DMS.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(Item Item)
         {
-            if (ModelState.IsValid)
-            {
-                ItemRepository.Insert(Item);
-                return RedirectToAction("Index");
-            }
-            ViewBag.Categories = categoryRepository.GetAll();
+          
 
-            //ViewData["AdminyId"] = new SelectList(, "ID", "Email", Item.AdminyId);
-            ViewData["CategoryId"] = new SelectList(categoryRepository.GetAll(), "ID", "Name", Item.CategoryId);
-            return View(Item);
+
+
+
+
+           
+                ItemRepository.Insert(Item);
+             
+            return RedirectToAction("Index","Home");
+
         }
 
         // GET: Item/Edit/5
@@ -95,6 +116,8 @@ namespace OnlineShopping.DMS.Controllers
             ViewData["CategoryId"] = new SelectList(categoryRepository.GetAll(), "ID", "Name", Item.CategoryId);
             return View(Item);
         }
+
+
 
         // POST: Item/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
@@ -137,6 +160,7 @@ namespace OnlineShopping.DMS.Controllers
         }
 
         // GET: Item/Delete/5
+
         public IActionResult Delete(int? id)
         {
             if (id == null)
